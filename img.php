@@ -1,9 +1,10 @@
 <?php
+require_once 'config/define.php';
 
-require_once 'util/checkParameter.php';
+require_once ROOTPATH.'util/checkParameter.php';
 
 $trac->saveCall($website, $ip);
-require_once 'util/printPicture.php';
+require_once ROOTPATH.'util/printPicture.php';
 exit;
 
 ?>
