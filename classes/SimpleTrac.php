@@ -150,7 +150,37 @@ class SimpleTrac{
         }
         return NULL;
     }
+    
+    public function getCountList(){
+        //TODO memcache
+        $query = "SELECT count(*) as count, url FROM ".DB_TABLEPREFIX."websites JOIN ".DB_TABLEPREFIX."visits on ".DB_TABLEPREFIX."websites.id = ".DB_TABLEPREFIX."visits.website_id GROUP BY id ORDER BY count(*) DESC";
+        $stmt = mysqli_prepare($this->dbLink, $query);
+        mysqli_stmt_execute($stmt);
+        $result = $stmt->get_result();
+        $websites = array();
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $websites[]=$row;
+        }
+        mysqli_stmt_close($stmt);
+        
+        return $websites;
+    }
 
+    public function getWebsiteClicks($website){
+        $websiteId = $this->alreadyCreated($website);
+        $query = "SELECT count(*) as count, date FROM ".DB_TABLEPREFIX."visits WHERE website_id = ? GROUP BY date ORDER BY date DESC";
+        $stmt = mysqli_prepare($this->dbLink, $query);
+        mysqli_stmt_bind_param($stmt, "s", $websiteId);
+        mysqli_stmt_execute($stmt);
+        $result = $stmt->get_result();
+        $dates = array();
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $dates[]=$row;
+        }
+        mysqli_stmt_close($stmt);
+        
+        return $dates;
+    }
 }
 
 ?>
