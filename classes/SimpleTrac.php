@@ -148,7 +148,7 @@ class SimpleTrac{
         if(isset($id) && $id){
             return $id;
         }
-        return NULL;
+        return 0;
     }
     
     public function getCountList(){
