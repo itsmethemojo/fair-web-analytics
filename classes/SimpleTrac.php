@@ -48,6 +48,7 @@ class SimpleTrac{
         
         if(!$this->alreadyCounted($id, $visitor,$dateString)){
             $this->count($id, $visitor,$dateString);
+            $this->setOverallDomainCount($website);
         }
     }
     
@@ -134,7 +135,7 @@ class SimpleTrac{
         return NULL;
     }
     
-    public function getOverallCount($website){
+    public function getOverallCountForWebsite($website){
         $websiteId = $this->alreadyCreated($website);
         
         $query = "SELECT count(*) FROM ".DB_TABLEPREFIX."visits WHERE website_id = ? LIMIT 0,1";
@@ -180,6 +181,52 @@ class SimpleTrac{
         mysqli_stmt_close($stmt);
         
         return $dates;
+    }
+    
+    private function getOverallDomainCount($domainId){
+        $query = "SELECT count(*) as count FROM ".DB_TABLEPREFIX."websites JOIN ".DB_TABLEPREFIX."visits on ".DB_TABLEPREFIX."websites.id = ".DB_TABLEPREFIX."visits.website_id where ".DB_TABLEPREFIX."websites.domain_id = ?";
+        
+        $stmt = mysqli_prepare($this->dbLink, $query);
+        mysqli_stmt_bind_param($stmt, "s", $domainId);
+        mysqli_stmt_execute($stmt);
+        $result = $stmt->get_result();
+        $count = 0;
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $count=$row['count'];
+        }
+        mysqli_stmt_close($stmt);
+        
+        return $count;
+    }
+    
+    private function setOverallDomainCount($website){
+        $domainId = $this->getDomainId($website);
+        $count = $this->getOverallDomainCount($domainId);
+        
+        $query = "UPDATE ".DB_TABLEPREFIX."domains SET ".DB_TABLEPREFIX."domains.counter = ? WHERE ".DB_TABLEPREFIX."domains.id = ?";
+        $stmt = mysqli_prepare($this->dbLink, $query);
+        mysqli_stmt_bind_param($stmt, "ss", $count,$domainId);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+               
+    }
+    
+    public function getOverallCountForDomain($website) {
+        $domainId = $this->getDomainId($website);
+        
+        $query = "SELECT counter FROM ".DB_TABLEPREFIX."domains WHERE ".DB_TABLEPREFIX."domains.id = ?";
+        
+        $stmt = mysqli_prepare($this->dbLink, $query);
+        mysqli_stmt_bind_param($stmt, "s", $domainId);
+        mysqli_stmt_execute($stmt);
+        $result = $stmt->get_result();
+        $count = 0;
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $count=$row['counter'];
+        }
+        mysqli_stmt_close($stmt);
+        
+        return $count;
     }
 }
 
