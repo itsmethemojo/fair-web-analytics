@@ -1,4 +1,6 @@
+nbproject/
+vendor/
+Configuration/settings.php
 
-*~
 /config/define.php
 /nbproject/
