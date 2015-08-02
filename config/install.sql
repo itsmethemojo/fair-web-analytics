@@ -1,6 +1,7 @@
 CREATE TABLE `simpletrac_domains` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `domain` varchar(100) CHARACTER SET latin1 NOT NULL,
+  `counter` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
