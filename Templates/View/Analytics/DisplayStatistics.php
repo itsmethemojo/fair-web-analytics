@@ -15,7 +15,7 @@ if(isset($this->par["jsonData"])){
             <?php if(isset($_GET['day'])){ echo "day: \"".$_GET['day']."\",\n"; }?>
             containerDivId : "container",
             navigationDivId : "navigation",
-            domain : "local-itsmethemojo"
+            domain : "<?php echo $_GET['domain'];?>"
         }
     );
 
