@@ -1,4 +1,4 @@
-function Xclass (config) {
+function ClickStatistic (config) {
     this.readConfig(config);
     
     if(this.day){
@@ -21,7 +21,7 @@ function Xclass (config) {
     }
 }
 
-Xclass.prototype.readConfig = function(config) {
+ClickStatistic.prototype.readConfig = function(config) {
     this.containerDivId = config.containerDivId || "container";
     this.navigationDivId = config.navigationDivId || "navigation";
     this.year = config.year || new Date().getFullYear();
@@ -32,7 +32,7 @@ Xclass.prototype.readConfig = function(config) {
     this.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 }
 
-Xclass.prototype.displayYearGraph = function(){
+ClickStatistic.prototype.displayYearGraph = function(){
     self = this;
     var jsonUrl = this.baseUrl+"?action=getStatistics&domain="+this.domain+"&year="+this.year;
     var clickUrl = this.baseUrl+"?action=displayStatistics&domain="+this.domain+"&year="+this.year;
@@ -50,7 +50,7 @@ Xclass.prototype.displayYearGraph = function(){
     });
 }
 
-Xclass.prototype.displayMonthGraph = function(){
+ClickStatistic.prototype.displayMonthGraph = function(){
     self = this;
     var jsonUrl = this.baseUrl+"?action=getStatistics&domain="+this.domain+"&year="+this.year+"&month="+this.month;
     var clickUrl = this.baseUrl+"?action=displayStatistics&domain="+this.domain+"&year="+this.year+"&month="+this.month;
@@ -69,7 +69,7 @@ Xclass.prototype.displayMonthGraph = function(){
     });
 }
 
-Xclass.prototype.displayDayGraph = function(){
+ClickStatistic.prototype.displayDayGraph = function(){
     self = this;
     var jsonUrl = this.baseUrl+"?action=getStatistics&domain="+this.domain+"&year="+this.year+"&month="+this.month+"&day="+this.day;
     //var clickUrl = this.baseUrl+"?action=displayStatistics&domain="+this.domain+"&year="+this.year+"&month="+this.month+"&month="+this.month;
@@ -112,7 +112,7 @@ Xclass.prototype.displayDayGraph = function(){
     });
 }
 
-Xclass.prototype.printLineGraph = function(graphData,xAxisUnits,yAxisMax){
+ClickStatistic.prototype.printLineGraph = function(graphData,xAxisUnits,yAxisMax){
     self = this;
     $(function () {
         $('#'+self.containerDivId).highcharts({
@@ -163,7 +163,7 @@ Xclass.prototype.printLineGraph = function(graphData,xAxisUnits,yAxisMax){
     });
 }
 
-Xclass.prototype.printPieGraph = function(graphData){
+ClickStatistic.prototype.printPieGraph = function(graphData){
     $(function () {
         $('#container').highcharts({
             chart: {
@@ -200,7 +200,7 @@ Xclass.prototype.printPieGraph = function(graphData){
     });
 }
 
-Xclass.prototype.printNavigation = function(){
+ClickStatistic.prototype.printNavigation = function(){
     self = this;
     
     if(this.day){
@@ -263,6 +263,6 @@ Xclass.prototype.printNavigation = function(){
     }
 }
 
-Xclass.prototype.daysInMonth = function(year,month){
+ClickStatistic.prototype.daysInMonth = function(year,month){
     return new Date(year, month, 0).getDate();
 }

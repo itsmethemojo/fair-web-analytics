@@ -30,9 +30,16 @@ class AnalyticsController extends BaseController{
         
         $domain = $this->getDomain();
         $year = $this->readParameter(self::$PARAM_YEAR);
+        if(!$year){
+            $year = date("Y");
+        }
         $month = $this->readParameter(self::$PARAM_MONTH);
         $day = $this->readParameter(self::$PARAM_DAY);
         $viewParameters = array();
+        $viewParameters[self::$PARAM_DAY] = $day;
+        $viewParameters[self::$PARAM_MONTH] = $month;
+        $viewParameters[self::$PARAM_YEAR] = $year;
+        $viewParameters[self::$PARAM_DOMAIN] = $domain;
         
         if($day && $month && $year){
             $viewParameters['statistic'] = "pageActionsOnDay";

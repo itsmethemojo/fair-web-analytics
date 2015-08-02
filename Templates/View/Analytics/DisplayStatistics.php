@@ -8,14 +8,14 @@ if(isset($this->par["jsonData"])){
 
 <script>
 
-    var bla = new Xclass(
+    var bla = new ClickStatistic(
         {
-            year : "<?php echo $_GET['year'];?>",
-            <?php if(isset($_GET['month'])){ echo "month: \"".$_GET['month']."\",\n"; }?>
-            <?php if(isset($_GET['day'])){ echo "day: \"".$_GET['day']."\",\n"; }?>
+            <?php if(isset($this->par['year'])){ echo "year: \"".$this->par['year']."\",\n"; }?>
+            <?php if(isset($this->par['month'])){ echo "month: \"".$this->par['month']."\",\n"; }?>
+            <?php if(isset($this->par['day'])){ echo "day: \"".$this->par['day']."\",\n"; }?>
             containerDivId : "container",
             navigationDivId : "navigation",
-            domain : "<?php echo $_GET['domain'];?>"
+            domain : "<?php echo $this->par['domain'];?>"
         }
     );
 
