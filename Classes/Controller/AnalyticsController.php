@@ -6,6 +6,7 @@ class AnalyticsController extends BaseController{
     private static $PARAM_YEAR = "year";
     private static $PARAM_MONTH = "month";
     private static $PARAM_DAY = "day";
+    private static $PARAM_USER = "user";
 
 
     public function initialize() {
@@ -35,52 +36,67 @@ class AnalyticsController extends BaseController{
         }
         $month = $this->readParameter(self::$PARAM_MONTH);
         $day = $this->readParameter(self::$PARAM_DAY);
+        $user = $this->readParameter(self::$PARAM_USER);
         $viewParameters = array();
         $viewParameters[self::$PARAM_DAY] = $day;
         $viewParameters[self::$PARAM_MONTH] = $month;
         $viewParameters[self::$PARAM_YEAR] = $year;
         $viewParameters[self::$PARAM_DOMAIN] = $domain;
+        $viewParameters[self::$PARAM_USER] = $user;
+        
+        if($user && $day && $month && $year){
+            $viewParameters['statistic'] = "pageActionsOnDay";
+            $viewParameters['jsonData'] =  $this->model->getUserForDay($domain,$user,$year,$month,$day);
+            return $viewParameters;
+        }
+        
+        if($user && $month && $year){
+            $viewParameters['statistic'] = "pageActionsPerDay";
+            $viewParameters['jsonData'] =  $this->model->getUserForMonth($domain,$user,$year,$month);
+            return $viewParameters;
+        }
         
         if($day && $month && $year){
             $viewParameters['statistic'] = "pageActionsOnDay";
-            $viewParameters['jsonData'] =  $this->model->getClicksForDay($domain,$year,$month,$day);
+            $viewParameters['jsonData'] =  $this->model->getVisitsForDay($domain,$year,$month,$day);
             return $viewParameters;
         }
         
         if($month && $year){
             $viewParameters['statistic'] = "pageActionsPerDay";
-            $viewParameters['jsonData'] =  $this->model->getVisitsPerDay($domain,$year,$month);
+            $viewParameters['jsonData'] =  $this->model->getVisitsForMonth($domain,$year,$month);
             return $viewParameters;
         }
         
         if($year){
             $viewParameters['statistic'] = "pageActionsPerMonth";
-            $viewParameters['jsonData'] = $this->model->getVisitsPerMonth($domain,$year);
+            $viewParameters['jsonData'] = $this->model->getVisitsForYear($domain,$year);
             return $viewParameters;
         }
         
         return NULL;
     }
     
-    public function actionGetStatistics(){
+    public function actionGetPageClicks(){
         $viewParameters = $this->queryStatistics();
         $this->disableContainer();
         $this->view($viewParameters);
     }
     
-    public function actionDisplayStatistics(){
+    public function actionDisplayPageClicks(){
         $viewParameters = $this->queryStatistics();
         $viewParameters["widget"] = $this->readParameter("widget") !== NULL;
         //TODO if widget do something special
         $this->javascript = array();        
         $this->javascript[] = "script/jquery-2.1.3.min.js";
         $this->javascript[] = "vendor/Highcharts/js/highcharts.js";
-        $this->javascript[] = "script/displayStatistics.js";
+        $this->javascript[] = "script/displayPageClicks.js";
         
         $this->css = array();        
-        $this->css[] = "style/displayStatistics.css";
+        $this->css[] = "style/displayPageClicks.css";
         
         $this->view($viewParameters);
+        
     }
 }
 ?>

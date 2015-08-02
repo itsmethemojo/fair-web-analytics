@@ -13,6 +13,7 @@ if(isset($this->par["jsonData"])){
             <?php if(isset($this->par['year'])){ echo "year: \"".$this->par['year']."\",\n"; }?>
             <?php if(isset($this->par['month'])){ echo "month: \"".$this->par['month']."\",\n"; }?>
             <?php if(isset($this->par['day'])){ echo "day: \"".$this->par['day']."\",\n"; }?>
+            <?php if(isset($this->par['user'])){ echo "user: \"".$this->par['user']."\",\n"; }?>
             containerDivId : "container",
             navigationDivId : "navigation",
             domain : "<?php echo $this->par['domain'];?>"

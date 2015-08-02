@@ -15,11 +15,11 @@ $analytics = $controller;
 
 if(isset($_GET["action"])){
     switch ($_GET["action"]){
-        case "getStatistics":
-            $analytics->actionGetStatistics();
+        case "getPageClicks":
+            $analytics->actionGetPageClicks();
             break;
-        case "displayStatistics":
-            $analytics->actionDisplayStatistics();
+        case "displayPageClicks":
+            $analytics->actionDisplayPageClicks();
             break;
     }
 }
