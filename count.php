@@ -15,4 +15,3 @@ $overallCount = $trac->getOverallCountForDomain($website);
         </div>
     </body>
 </html>
-<?php
