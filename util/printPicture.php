@@ -1,6 +1,6 @@
 <?php
 
-$name = isset($otherPicture) ? $otherPicture : 'img/000000-0.png';
+$name = isset($otherPicture) ? ROOTPATH.$otherPicture : ROOTPATH.'img/000000-0.png';
 $fp = fopen($name, 'rb');
 error_log($name);
 // send the right headers

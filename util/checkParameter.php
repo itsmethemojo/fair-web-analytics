@@ -4,7 +4,7 @@ require_once ROOTPATH.'config/define.php';
 
 if(!isset($_GET['website'])){
     header("Expires: Sat, 26 Jul 2080 05:00:00 GMT");
-    $otherPicture = 'MissingWebsiteParameter.png';
+    $otherPicture = 'img/MissingWebsiteParameter.png';
     require_once ROOTPATH.'util/printPicture.php';
     exit;
 }
