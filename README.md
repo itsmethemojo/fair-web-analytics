@@ -24,6 +24,7 @@ read through the *.ini files in config and modify them
 
 ## TODOS
 * Demo Link
+* add mysql table structure
 * Code Documentation
 * API Documentation
 * javascript lib Documentation
