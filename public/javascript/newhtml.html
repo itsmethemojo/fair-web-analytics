@@ -1,0 +1,47 @@
+AnalyticsGraph.prototype.printNavigation = function () {
+    self = this;
+    if ($("#" + self.containerDivId + "-navigation").length === 0) {
+        var $chart = $("#" + self.containerDivId);
+        $('<div id="' + self.containerDivId + '-navigation"></div>').insertBefore($chart).width($chart.width());
+    }
+
+    $navigation = $("#" + self.containerDivId + '-navigation');
+    var config = self.getConfigAsJsonString();
+
+    var fullNavigation = "";
+    
+    var yearNavigation = '<p class="years">';
+    yearNavigation += '<a href="javascript:var tmp = new AnalyticsGraph(' + config + ", {year:'" + (self.year * 1 - 1) + "',month:false,day:false});" + '">' + (self.year * 1 - 1) + '</a> ';
+    yearNavigation += self.year;
+    if (new Date().getFullYear() !== self.year * 1) {
+        yearNavigation += ' <a href="javascript:var tmp = new AnalyticsGraph(' + config + ", {year:'" + (self.year * 1 + 1) + "',month:false,day:false});" + '">' + (self.year * 1 + 1) + '</a>';
+    }
+    fullNavigation += yearNavigation;
+    
+    if(self.month){
+        var monthNavigation = '<p class="month">';
+        var monthNumber = 0;
+        $.each(self.months, function(key, monthName){
+            monthNumber++;
+            
+            if(self.month * 1 === monthNumber){
+                monthNavigation+= " "+monthName;
+            }
+            else{
+                console.log(self.month * 1 + " " + monthNumber);
+                monthNavigation+= ' <a href="javascript:var tmp = new AnalyticsGraph(' + config + ", {month:" + monthNumber + ",day:false});" + '">' + monthName  + '</a>';
+            }
+        });
+        monthNavigation+= "</p>";
+        fullNavigation += monthNavigation;
+    }
+    
+    if(self.day){
+        daysInMonth = new Date(self.year, self.month, 0).getDate();
+        
+        
+        console.log(daysInMonth);
+    }
+    $navigation.html(fullNavigation);
+
+}
